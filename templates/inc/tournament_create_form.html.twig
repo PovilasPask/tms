@@ -1,0 +1,30 @@
+{{ form_start(form) }}
+  {{ form_errors(form) }}
+  <div class="form-group">
+    <label class="text-light">Turnyro pavadinimas</label>
+    {{ form_errors(form.name) }}
+    {{ form_widget(form.name) }}
+  </div>
+  <div class="form-group">
+    <label class="text-light">Šalis</label>
+    {{ form_errors(form.country) }}
+    {{ form_widget(form.country) }}
+  </div>
+  <div class="form-group">
+    <label class="text-light">Lokacija</label>
+    {{ form_errors(form.region) }}
+    {{ form_widget(form.region) }}
+  </div>
+  <div class="form-group">
+    <label class="text-light">Turnyro tipas</label>
+    {{ form_errors(form.type) }}
+    {{ form_widget(form.type) }}
+  </div>
+  <div class="form-group">
+    <label class="text-light">Vienos komandos žaidėjų skaičius aikštėje</label>
+    {{ form_errors(form.playersOnField) }}
+    {{ form_widget(form.playersOnField) }}
+  </div>
+  {{ form_widget(form._token) }}
+  {{ form_widget(form.submit) }}
+{{ form_end(form) }}

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Įvesti varžybų rezultatą{% endblock %}
+
+{% block breadcrumb %}
+  <div class="container mt-2">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user-dashboard">Vartotojo veiksmai</a></li>
+        <li class="breadcrumb-item"><a href="/tournaments/{{ tournament.id }}">{{ tournament.name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Įvesti varžybų rezultatą</li>
+      </ol>
+    </nav>
+  </div>
+{% endblock %}
+
+{% block body %}
+  <h2 class="h2 text-center text-color-main">Įvesti varžybų rezultatą</h2>
+  <div class="text-center col-md-6 offset-md-3">
+    {{ form_start(form) }}
+      {{ form_errors(form) }}
+      <div class="form-group">
+        <label class="text-light">{{ game.homeTeam.name }}</label>
+        {{ form_errors(form.homeScore) }}
+        {{ form_widget(form.homeScore) }}
+      </div>
+      <div class="form-group">
+        <label class="text-light">{{ game.awayTeam.name }}</label>
+        {{ form_errors(form.awayScore) }}
+        {{ form_widget(form.awayScore) }}
+      </div>
+      {{ form_widget(form._token) }}
+      {{ form_widget(form.submit) }}
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

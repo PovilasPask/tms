@@ -1,0 +1,4 @@
+petras@mail.com pass: demo
+admin@mail.com pass: demo
+ref@mail.com pass: demodemo
+test1@mail.com pass: demodemo

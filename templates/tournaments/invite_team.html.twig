@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pakvieti komandą{% endblock %}
+
+{% block breadcrumb %}
+  <div class="container mt-2">
+    {% if isManagerOfThisTeam %}
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/user-dashboard">Vartotojo veiksmai</a></li>
+          <li class="breadcrumb-item"><a href="/teams/{{ teamId }}">{{ teamName }}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Pakviesti komandą</li>
+        </ol>
+      </nav>
+    {% else %}
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/teams">Komandos</a></li>
+          <li class="breadcrumb-item"><a href="/teams/{{ teamId }}">{{ teamName }}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Pakviesti komandą</li>
+        </ol>
+      </nav>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block body %}
+  <h2 class="h2 text-center text-color-main">Pridėti {{ teamName }}</h2>
+  <div class="text-center col-md-6 offset-md-3">
+    {{ form_start(form) }}
+      {{ form_errors(form) }}
+      <div class="form-group">
+        <label class="text-light">Į kurį turnyrą pakviesti?</label>
+        {{ form_errors(form.tournament) }}
+        {{ form_widget(form.tournament) }}
+      </div>
+      {{ form_widget(form._token) }}
+      {{ form_widget(form.submit) }}
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

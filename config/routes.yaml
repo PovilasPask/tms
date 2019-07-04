@@ -1,0 +1,11 @@
+# index:
+#    path: /
+#    controller: App\Controller\TmsController::index
+
+# index:
+#    path: /
+#    controller: App\Controller\TmsController::index
+
+# login:
+# path: /login
+# controller: App\Controller\auth::viwLogin

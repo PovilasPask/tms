@@ -1,0 +1,37 @@
+<section>
+  <h4 class="text-center">Turnyrinė lentelė</h4>
+  {% if tableRows is empty %}
+    <p class="text-light">Komandų nėra...</p>
+  {% else %}
+    <table class="table table-sm table-hover table-dark">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center"><abbr title="Vieta">Vt.</abbr></th>
+          <th scope="col"><abbr title="Komandos pavadinimas">Komanda</abbr></th>
+          <th scope="col" class="text-center"><abbr title="Sužaistų varžybų skaičius">S.</abbr></th>
+          <th scope="col" class="text-center"><abbr title="Pergalių skaičius">Per.</abbr></th>
+          <th scope="col" class="text-center"><abbr title="Lygiųjų skaičius">Lyg.</abbr></th>
+          <th scope="col" class="text-center"><abbr title="Pralaimėjimų skaičius">Pra.</abbr></th>
+          <th scope="col" class="text-center"><abbr title="Įmuštų įvarčių skaičius">ĮĮ.</abbr></th>
+          <th scope="col" class="text-center"><abbr title="Praleistų įvarčiš skaičius">PĮ.</abbr></th>
+          <th scope="col" class="text-center"><abbr title="Taškų skaičius">T.</abbr></th>          
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in tableRows %}
+          <tr>
+            <td class="text-center">{{ loop.index }}</td>
+            <td><a href="/teams/{{ row.id }}">{{ row.name }}</a></td>
+            <td class="text-center">{{ row.gamesPlayed }}</td>
+            <td class="text-center">{{ row.wins }}</td>
+            <td class="text-center">{{ row.draws }}</td>
+            <td class="text-center">{{ row.loses }}</td>
+            <td class="text-center">{{ row.goalsF }}</td>
+            <td class="text-center">{{ row.goalsA }}</td>
+            <td class="text-center">{{ row.points }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</section>

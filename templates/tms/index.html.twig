@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Turnyrų valdymo sistema{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="styles/styles.css" >
+{% endblock %}
+
+{% block body %}
+  <h1 class="text-center mt-5 mb-4 text-color-main">Turnyrų Valdymo Sistema</h1>
+  <div class="row justify-content-md-center">
+    <div class="col-md-7">
+      <p class="text-center text-light">Palengvink savo darbą organizuojant turnyrus su turnyrų valdymo sistema! Puikiai tinka lengvam megėjiškų futbolo turnyrų valdymui.</p>
+    </div> 
+  </div>
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-10">
+      {{ form_start(form) }}
+        <div class="input-group input-group-lg mb-3 mt-5">
+          {{ form_errors(form.text) }}
+          {{ form_widget(form.text) }}
+          <div class="input-group-append">
+            {{ form_widget(form.submit) }}
+          </div>
+        </div>
+        {{ form_widget(form._token) }}
+      {{ form_end(form) }}
+    </div>
+  </div>
+{% endblock %}

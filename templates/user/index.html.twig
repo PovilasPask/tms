@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vartotojo veiksmai{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="../styles/styles.css" >
+{% endblock %}
+
+{% block body %}
+  <h1 class="text-center mt-5 mb-4">Vartotojo veiksmai</h1>
+  <h3>Mano komandos:</h3>
+  {% if data.myTeams is empty %}
+    <p class="text-light">Jūs neturite sukūrę komandų...</p>
+  {% else %}
+    <ul>
+    {% for team in data.myTeams %}
+      <li><a href="/teams/{{ team.id }}">{{ team.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <a class="btn btn-success" href="/new-team" role="button">Sukurti komandą</a>
+
+  <hr>
+
+  <h3>Mano Turnyrai:</h3>
+  {% if data.myTournaments is empty %}
+    <p class="text-light">Jūs neturite sukūrę turnyrų...</p>
+  {% else %}
+    <ul>
+    {% for tournament in data.myTournaments %}
+      <li><a href="/tournaments/{{ tournament.id }}">{{ tournament.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  <a class="btn btn-success" href="/tournaments/new" role="button">Sukurti turnyrą</a>
+
+{% endblock %}

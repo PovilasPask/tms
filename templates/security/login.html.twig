@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prisijungti{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="../styles/styles.css" >
+{% endblock %}
+
+{% block body %}
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <h2 class="h2 text-center text-color-main">Prisijungti</h2>
+    <div class="text-center col-md-6 offset-md-3">
+        <div class="form-group">
+            <label for="inputEmail" class="text-light">El. paštas</label>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control  input-field-green" placeholder="El. paštas" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="text-light">Slaptažodis</label>
+            <input type="password" name="password" id="inputPassword" class="form-control  input-field-green" placeholder="Slaptažodis" required>
+        </div>
+
+        <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+        >
+
+        <button class="btn btn-secondary form-control" type="submit">
+            Prisijungti
+        </button>
+    </div>
+</form>
+{% endblock %}

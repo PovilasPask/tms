@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ team.name }}{% endblock %}
+
+{% block breadcrumb %}
+  <div class="container mt-2">
+    {% if isManagerOfThisTeam %}
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/user-dashboard">Vartotojo veiksmai</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ team.name }}</li>
+        </ol>
+      </nav>
+    {% elseif team.state == 3 %}
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/tournaments/{{ team.tournament.id }}">{{ team.tournament.name }}</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">{{ team.name }}</li>
+        </ol>
+      </nav>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block body %}
+  <h1 class="text-center mt-5 mb-4">{{ team.name }}</h1>
+  
+  <h4>Lokacija:</h4>
+  <p class="text-light">{{ team.country.name }}, {{ team.region }}</p>
+  
+  <h4>Aikštė:</h4>
+  <p class="text-light">{{ team.venue }}</p>
+
+  <h4>Kontaktai:</h4>
+  <p class="text-light">{{ team.contacts }}</p>
+
+  {% if team.state == 1 and isManagerOfThisTeam %}
+    <h4>Komanda pateikė registraciją į turnyrą:</h4>
+    <p>
+      <a href="/tournaments/{{ team.tournament.id }}">{{ team.tournament.name }}</a>
+      <a class="btn btn-sm btn-danger mb-2" href="/teams/{{team.id}}/decline" role="button" onclick="return confirm('Ar tikrai norite panaikinti registraciją?');">Panaikinti</a><br>
+    </p>
+  {% elseif team.state == 2 and isManagerOfThisTeam %}
+    <h4>Komanda gavo pakvietimą į turnyrą:</h4>
+    <a href="/tournaments/{{ team.tournament.id }}">{{ team.tournament.name }}</a>
+    <a class="btn btn-sm btn-success mb-2" href="/teams/{{team.id}}/accept" role="button">Priimti</a>
+    <a class="btn btn-sm btn-danger mb-2" href="/teams/{{team.id}}/decline" role="button" onclick="return confirm('Ar tikrai norite atmesti kvietimą?');">Atmesti</a><br>
+  {% elseif team.state == 3 %}
+    <h4>Dalyvauja turnyre:</h4>
+    <p class="text-light"><a href="/tournaments/{{ team.tournament.id }}">{{ team.tournament.name }}</a></p>
+  {% endif %}
+
+  {% if isManager and team.state == 0 %}
+    {% if availableTournaments is not empty %}
+      <a class="btn btn-success mb-2" href="/tournaments/invite/{{team.id}}" role="button">Pakviesti į turnyrą</a>
+    {% endif %}
+  {% endif %}
+  {% if isManagerOfThisTeam %}
+    <a class="btn btn-success mb-2" href="/teams/{{team.id}}/edit" role="button">Keisti informaciją</a>
+    <a class="btn btn-success mb-2" href="/teams/{{team.id}}/addPlayer" role="button">Pridėti žaidėją</a>
+    <a class="btn btn-danger mb-2" href="/teams/{{team.id}}/delete" role="button" onclick="return confirm('Ar tikrai norite ištrinti komandą?');">Trinti komandą</a>
+  {% endif %}
+
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <h4 class="text-center">Varžybos</h4>
+      {% if games is empty %}
+      <p class="text-light">Varžybų nėra...</p>
+      {% else %}
+        <table class="table table-striped table-hover table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th colspan="4">
+                <div class="row">
+                  <div class="col-6 text-left">
+                    <a class="btn btn-sm btn-secondary" href="#" role="button">&#171;</a>
+                  </div>
+                  <div class="col-6 text-right">
+                    <a class="btn btn-sm btn-secondary" href="#" role="button">&#187;</a>
+                  </div>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for game in games %}
+              <tr>
+                <td class="text-center text-light">
+                  {{ game.date | date('Y-m-d H:i') }}
+                </td>
+                <td class="text-right">
+                  <a href="/teams/{{ game.homeTeam.id }}">{{ game.homeTeam.name }}</a>
+                </td>
+                {% if game.homeScore is null %}
+                  <td class="text-center text-light">-:-</td>
+                {% else %}
+                  <td class="text-center text-light">{{ game.homeScore }}-{{ game.awayScore }}</td>
+                {% endif %}
+                <td class="text-left">
+                  <a href="/teams/{{ game.awayTeam.id }}">{{ game.awayTeam.name }}</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </div>
+
+    <div class="col-md-6">
+      <h4 class="text-center">Žaidėjai</h4>
+      {% if players is empty %}
+        <p class="text-light">Žaidėjų nėra...</p>
+      {% else %}
+        <table class="table table-striped table-hover table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th>Vardas Pavardė</th>
+              <th>Metai</th>
+              <th><abbr title="Įvarčiai">Įv.</abbr></th>
+              {% if isManagerOfThisTeam %}
+                <th></th>
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for player in players %}
+              <tr>
+                <th class="text-light">{{ player.number }} {{ player.name }}</th>
+                <th class="text-light">{{ player.bDate | date("Y-m-d") }}</th>
+                <th class="text-light">{{ player.goalCount }}</th>
+                {% if isManagerOfThisTeam %}
+                  <th>
+                    <a class="btn btn-sm btn-success" href="/teams/players/{{player.id}}/edit" role="button">Redaguoti</a>
+                    <a class="btn btn-sm btn-danger" href="/teams/players/{{player.id}}/delete" role="button" onclick="return confirm('Ar tikrai norite ištrinti žaidėją?');">Trinti</a>
+                  </th>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </div>
+  </div>
+  
+{% endblock %}

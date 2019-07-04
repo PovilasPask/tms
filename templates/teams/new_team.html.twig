@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nauja komanda{% endblock %}
+
+{% block breadcrumb %}
+  <div class="container mt-2">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user-dashboard">Vartotojo veiksmai</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Nauja komanda</li>
+      </ol>
+    </nav>
+  </div>
+{% endblock %}
+
+{% block body %}
+  <h2 class="h2 text-center text-color-main">Nauja komanda</h2>
+  <div class="text-center col-md-6 offset-md-3">
+    {% include 'inc/team_form.html.twig' %}
+  </div>
+{% endblock %}

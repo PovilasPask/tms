@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Turnyrai{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="../styles/styles.css" >
+{% endblock %}
+
+{% block body %}
+  <h1 class="text-center mt-5 mb-4">Turnyrai</h1>
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-10">
+
+      {{ form_start(form) }}
+        <div class="input-group input-group-lg mb-3 mt-5">
+          {{ form_errors(form.text) }}
+          {{ form_widget(form.text) }}
+          <div class="input-group-append">
+            {{ form_widget(form.submit) }}
+          </div>
+        </div>
+        {{ form_widget(form._token) }}
+      {{ form_end(form) }}
+
+      {% if tournaments is empty %}
+        <p>Turnyrų nėra.</p>
+      {% else %}
+        <table class="table table-hover table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Lokacija</th>
+              <th scope="col">Turnyro pavadinimas</th>
+              <th scope="col">Kodas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tournament in tournaments %}
+              <tr>
+                <td>{{ tournament.country.name }}, {{tournament.region}}</td>
+                <td><a href="/tournaments/{{ tournament.id }}">{{ tournament.name }}</a></td>
+                <td>{{ tournament.code }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

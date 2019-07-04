@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Komandos{% endblock %}
+
+{% block body %}
+  <h1 class="text-center mt-5 mb-4">Komandos</h1>
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-10">
+
+      {{ form_start(form) }}
+        <div class="input-group input-group-lg mb-3 mt-5">
+          {{ form_errors(form.text) }}
+          {{ form_widget(form.text) }}
+          <div class="input-group-append">
+            {{ form_widget(form.submit) }}
+          </div>
+        </div>
+        {{ form_widget(form._token) }}
+      {{ form_end(form) }}
+
+      {% if teams is empty %}
+        <p>Komandų nėra.</p>
+      {% else %}
+        <table class="table table-hover table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Lokacija</th>
+              <th scope="col">Komandos pavadinimas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for team in teams %}
+              <tr>
+                <td>{{ team.country.name }}, {{team.region}}</td>
+                <td><a href="/teams/{{ team.id }}">{{ team.name }}</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

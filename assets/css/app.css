@@ -1,0 +1,65 @@
+/* Main bg color -  #268C26*/
+/* Input bg color -  #66C557*/
+
+
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+   color: #333;
+}
+a {
+   /* color: #333; */
+   /* color: #f8f9fa; */
+   color: #e6ffe6
+}
+a:hover {
+   color: #999;
+   text-decoration: underline;
+}
+#container {
+   min-height:100%;
+   position:relative;
+}
+#header {
+   background:#ff0;
+   padding:10px;
+}
+#body {
+   padding:10px;
+   padding-bottom:100px;   /* Height of the footer */
+}
+#footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px;   /* Height of the footer */
+   background:#6cf;
+}
+
+body  {
+  background-color: #268C26;
+}
+
+.input-field-green {
+  background-color: #66C557;
+}
+
+.input-field-green:focus {
+  background-color: #66C557;
+}
+
+.text-color-main {
+  color: #333;
+}
+
+/* Overwritng bootstrap */
+
+.breadcrumb {
+   background-color: #66C557;
+}
+
+.text-light {
+   color: #e6ffe6 !important;
+}

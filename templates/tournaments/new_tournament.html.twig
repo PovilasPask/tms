@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Naujas turnyras{% endblock %}
+
+{% block breadcrumb %}
+  <div class="container mt-2">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/user-dashboard">Vartotojo veiksmai</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Naujas turnyras</li>
+      </ol>
+    </nav>
+  </div>
+{% endblock %}
+
+{% block body %}
+  <h2 class="h2 text-center text-color-main">Naujas turnyras</h2>
+  <div class="text-center col-md-6 offset-md-3">
+    {% include 'inc/tournament_create_form.html.twig' %}
+  </div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ tournament.name }}{% endblock %}
+
+{% block breadcrumb %}
+  {% if isManagerOfThisTournament == true %}
+    <div class="container mt-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/user-dashboard">Vartotojo veiksmai</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ tournament.name }}</li>
+          </ol>
+        </nav>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+  <h1 class="text-center mt-5 mb-0">{{ tournament.name }}</h1>
+  <p class="text-center mb-4">({{ tournament.code }})</p>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <div class="dropdown mb-3">
+        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Daugiau
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/tournaments/{{tournament.id}}" role="button">Pradžia</a>
+          <a class="dropdown-item" href="/tournaments/{{tournament.id}}/decription" role="button">Aprašymas</a>
+          <a class="dropdown-item" href="/tournaments/{{tournament.id}}/spec" role="button">Turnyro valdymas</a>
+          <a class="dropdown-item" href="/tournaments/{{tournament.id}}/prizes" role="button">Prizai</a>
+          <a class="dropdown-item" href="/tournaments/{{tournament.id}}/rules" role="button">Nuostatai</a>
+          <a class="dropdown-item" href="/tournaments/{{tournament.id}}/contacts" role="button">Kontaktai</a>
+        </div>
+      </div>
+
+      <h4>Lokacija:</h4>
+      <p class="text-light">{{ tournament.country.name }}, {{ tournament.region }}</p>
+      
+      <h4>Aikštė:</h4>
+      <p class="text-light">{{ tournament.venue }}</p>
+    </div>
+  </div>
+
+  {% if is_granted('ROLE_MANAGER') %}
+    {% if isManagerOfThisTournament %}
+      <a class="btn btn-success mb-2" href="/tournaments/{{tournament.id}}/teams" role="button">Komandos</a>
+      {% if tournament.isStarted == false %}
+        <a class="btn btn-success mb-2" href="/tournaments/{{tournament.id}}/start" role="button" onclick="return confirm('Pradėjus turnyrą nubebus galima nei pridėti, nei pašalinti turnyro komandų. Pradėjus turnyrą bus sugeneruotas tvarkaraštis.\n\nAr tikrai norite pradėti turnyrą?');">Pradėti turnyrą</a>
+      {% endif %}
+    {% endif %}
+    {% if not(tournament.isStarted) %}
+      {% if availableTeams is not empty %}
+        <a class="btn btn-success mb-2" href="/teams/registerToTournament/{{ tournament.id }}" role="button">Registruoti komandą į turnyrą</a>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  <hr>
+  
+  <div class="text-center col-md-8 offset-md-2">
+    <section>
+      <h4 class="text-center">Tvarkaraštis</h4>
+      {% if games is empty %}
+        <p class="text-light">Varžybų nėra...</p>
+      {% else %}
+        <table class="table table-sm table-dark table-hover">
+          <tbody>
+            {% for game in games %}
+              <tr>
+                <td class="text-center">
+                  {{ game.date | date('Y-m-d H:i') }}
+                </td>
+                <td class="text-right">
+                  <a href="/teams/{{ game.homeTeam.id }}">{{ game.homeTeam.name }}</a>
+                </td>
+                {% if game.homeScore is null %}
+                  <td class="text-center">-:-</td>
+                {% else %}
+                  <td class="text-center">{{ game.homeScore }}-{{ game.awayScore }}</td>
+                {% endif %}
+                <td class="text-left">
+                  <a href="/teams/{{ game.awayTeam.id }}">{{ game.awayTeam.name }}</a>
+                </td>
+                {% if isManagerOfThisTournament == true %}
+                  <td class="text-center">
+                    <a class="btn btn-sm btn-warning mb-2" href="/games/{{ game.id }}/edit" role="button">Keisti laiką</a>
+                    <a class="btn btn-sm btn-success mb-2" href="/games/{{ game.id }}/enterScore" role="button">Įvesti rezultatą</a>
+                  </td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </section>
+
+    {% if tournament.type.id == 1 %}
+      {% include 'tournaments/league.html.twig' %}
+    {% endif %}
+  </div>
+  
+{% endblock %}

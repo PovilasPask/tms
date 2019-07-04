@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registruotis{% endblock %}
+
+{% block body %}
+  <h2 class="h2 text-center text-color-main">Registarcija</h2>
+  <div class="text-center col-md-6 offset-md-3">
+    {{ form_start(form) }}
+      {{ form_errors(form) }}
+      <div class="form-group">
+        <label class="text-light">Paskyros tipas</label>
+        {{ form_widget(form.account_type) }}
+      </div>
+      <div class="form-group">
+        <label class="text-light">Vardas Pavardė</label>
+        {{ form_errors(form.name) }}
+        {{ form_widget(form.name) }}
+      </div>
+      <div class="form-group">
+        <label class="text-light">El. paštas</label>
+        {{ form_errors(form.email) }}
+        {{ form_widget(form.email) }}
+      </div>
+      <div class="form-group">
+        <label class="text-light">Slaptažodis</label>
+        {{ form_errors(form.password.first) }}
+        {{ form_widget(form.password.first) }}
+      </div>
+      <div class="form-group">
+        <label class="text-light">Pakartoti slaptažodį</label>
+        {{ form_errors(form.password.second) }}
+        {{ form_widget(form.password.second) }}
+      </div>
+      {{ form_widget(form._token) }}
+      {{ form_widget(form.submit) }}
+    {{ form_end(form) }}
+  </div>
+
+  {# <hr>
+
+  <div class="text-center col-md-6 offset-md-3">
+    <form action="/register" method="post">
+      <div class="form-group">
+        <label class="text-light">Paskyros tipas</label>
+        <select class="form-control" name="userType">
+          <option value="1">Vartotojas</option>
+          <option value="2">Teisėjas</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="text-light">Vardas Pavardė</label>
+        <input type="text" class="form-control input-field-green" name="name" placeholder="Vardas Pavardė">
+      </div>
+      <div class="form-group">
+        <label class="text-light">El. paštas</label>
+        <input type="email" class="form-control input-field-green" name="email" placeholder="El. paštas">
+      </div>
+      <div class="form-group">
+        <label class="text-light">Slaptažodis</label>
+        <input type="password" class="form-control input-field-green" name="pass1" placeholder="Slaptažodis">
+      </div>
+      <div class="form-group">
+        <label class="text-light">Pakartoti slaptažodį</label>
+        <input type="password" class="form-control input-field-green" name="pass2" placeholder="Slaptažodis">
+      </div>
+      <button type="submit" name="submit" class="btn btn-secondary form-control">Registruotis</button>
+    </form>
+  </div> #}
+{% endblock %}
